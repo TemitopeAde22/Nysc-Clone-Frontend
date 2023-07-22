@@ -136,4 +136,15 @@
     hover:bg-gray-400 hover:rounded-md hover:text-white border border-x-0 border-t-0 
      border-[#000000] hover:border-none hover:transition duration-300 ease-out;
     }
+
+    .label_text {
+        @apply w-full border border-black py-2 border-x-0 border-t-0 mb-5
+        font-Belanosima text-[17px]
+    }
+    .input {
+        @apply outline-none border w-full mt-2 py-1 px-4 rounded-full
+    }
+    .text {
+        @apply font-Roboto text-[15px]
+    }
 }

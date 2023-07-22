@@ -1,17 +1,21 @@
 import React from "react"
+import axios from "axios"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 
 // The watch function is used to access the current values of the password and confirmPassword
 function SignUpPage() {
     const USER_REGEX = /^[A-Za-z]/
     const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
+    const MOBILE_REGEX = /^[0-9]*$/
     const {
         register,
         handleSubmit,
         formState: { errors },
+        // reset,
         watch,
     } = useForm()
-
+    const navigate = useNavigate()
     const key = {
         Password: watch("Password"),
         confirmPassword: watch("confirmPassword"),
@@ -19,11 +23,28 @@ function SignUpPage() {
 
     const { Password } = key
     const onSubmit = (data) => {
+        axios
+            .post("http://localhost:5000/api/user/register", data)
+            .then((response) => {
+                alert("Account Created Successfully")
+                console.log(response)
+                navigate("/login")
+            })
+            .catch((error) => {
+                if (error.response && error.response.status === 409) {
+                    alert("User Already Exists")
+                    navigate("/login")
+                } else {
+                    console.log(error)
+                }
+            })
+
         // compare
         if (data.Password !== data.confirmPassword) {
             alert("Passwords do not match")
             return
         }
+        // reset()
         console.log(data)
     }
     return (
@@ -51,13 +72,13 @@ function SignUpPage() {
                             {/* FirstName */}
                             <div className="input_container">
                                 <h3 className="font-semibold text-[12px]">
-                                    FirstName:
+                                    First Name:
                                 </h3>
                                 <input
                                     className="input_form"
                                     type="text"
-                                    {...register("FirstName", {
-                                        required: "FirstName is required",
+                                    {...register("firstname", {
+                                        required: "First name is required",
                                         pattern: {
                                             value: USER_REGEX,
                                             message:
@@ -65,9 +86,9 @@ function SignUpPage() {
                                         },
                                     })}
                                 />
-                                {errors.FirstName && (
+                                {errors.firstname && (
                                     <p className="italic text-[10px] font-semibold  text-red-500">
-                                        {errors.FirstName.message}
+                                        {errors.firstname.message}
                                     </p>
                                 )}
                             </div>
@@ -75,13 +96,13 @@ function SignUpPage() {
                             {/* lastname */}
                             <div className="input_container">
                                 <h3 className="font-semibold text-[12px]">
-                                    LastName:
+                                    Last Name:
                                 </h3>
                                 <input
                                     className="input_form"
                                     type="text"
-                                    {...register("LastName", {
-                                        required: "LastName is required",
+                                    {...register("lastname", {
+                                        required: "Last name is required",
                                         pattern: {
                                             value: USER_REGEX,
                                             message:
@@ -89,9 +110,9 @@ function SignUpPage() {
                                         },
                                     })}
                                 />
-                                {errors.LastName && (
+                                {errors.lastname && (
                                     <p className="italic text-[10px] font-semibold  text-red-500">
-                                        {errors.LastName.message}
+                                        {errors.lastname.message}
                                     </p>
                                 )}
                             </div>
@@ -106,28 +127,35 @@ function SignUpPage() {
                                 <input
                                     className="input_form"
                                     type="email"
-                                    {...register("Email", { required: true })}
+                                    {...register("email", { required: true })}
                                 />
-                                {errors.Email && (
+                                {errors.email && (
                                     <p className="italic text-[10px] font-semibold  text-red-500">
                                         Email is required.
                                     </p>
                                 )}
                             </div>
+
+                            {/* mobile number */}
                             <div className="input_container">
                                 <h3 className="font-semibold text-[12px]">
-                                    Date of Birth:
+                                    Mobile Number:
                                 </h3>
                                 <input
                                     className="input_form"
-                                    type="date"
-                                    {...register("DateOfBirth", {
-                                        required: true,
+                                    type="tel"
+                                    {...register("mobile", {
+                                        required: "Mobile number is required",
+                                        pattern: {
+                                            value: MOBILE_REGEX,
+                                            message:
+                                                "Invalid mobile number. Please enter numbers only.",
+                                        },
                                     })}
                                 />
-                                {errors.DateOfBirth && (
-                                    <p className="italic font-semibold  text-[10px] text-red-500">
-                                        Date of Birth is required.
+                                {errors.mobile && (
+                                    <p className="italic text-[10px] font-semibold text-red-500">
+                                        {errors.mobile.message}
                                     </p>
                                 )}
                             </div>

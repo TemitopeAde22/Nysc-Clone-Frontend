@@ -33,7 +33,7 @@ export function Header() {
         delaySpeed: 2000,
     })
     return (
-        <header className="w-full bg-[#fff] top-0">
+        <header className="w-full bg-[#fff] sticky  z-20 top-0">
             {/* Header Top */}
             <div className=" relative md:ml-20 flex sm:h-[70px] sm:flex-row sm:items-center items-start md:items-center space-x-5 flex-col md:flex-row px-5">
                 <div className="flex items-center flex-row justify-between space-x-10 ">
@@ -41,7 +41,7 @@ export function Header() {
                         <img
                             className="cursor-pointer"
                             src="https://portal.nysc.org.ng/nysc1/img/banner1.png"
-                            alt=""
+                            alt="logo"
                         />
                     </a>
                     <div className="relative">
@@ -90,21 +90,21 @@ export function Header() {
 
                 <div className="border-none hidden md:flex md:flex-row flex-col items-center sm:inline-flex">
                     <ul className="flex w-94 md:w-64 md:flex-row sm:justify-evenly sm:flex-row sm:p-5 md:py-5 flex-col items-center justify-start">
-                        <l1 className="list_items relative nav">
+                        <li className="list_items relative nav">
                             <a className="links" href="https://Home#">
                                 Home
                             </a>
-                        </l1>
-                        <l1 className="list_items relative nav">
+                        </li>
+                        <li className="list_items relative nav">
                             <a className="links" href="https://Contact#">
                                 Contact
                             </a>
-                        </l1>
-                        <l1 className="list_items relative nav border-b-0">
+                        </li>
+                        <li className="list_items relative nav border-b-0">
                             <a className="links" href="https://Payment#">
                                 Payment
                             </a>
-                        </l1>
+                        </li>
                     </ul>
                 </div>
 

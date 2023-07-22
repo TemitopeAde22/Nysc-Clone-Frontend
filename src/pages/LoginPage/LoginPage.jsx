@@ -4,19 +4,37 @@ import LockIcon from "@mui/icons-material/Lock"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
+import { useDispatch } from "react-redux"
+import { login } from "../../features/AuthSlice"
+
+import axios from "axios"
 
 function LoginPage() {
+    const dispatch = useDispatch()
     const {
         register,
         handleSubmit,
         formState: { errors },
-        reset,
     } = useForm()
-    const navigation = useNavigate()
+    const navigate = useNavigate()
 
     const onSubmit = (data) => {
+        axios
+            .post("http://localhost:5000/api/user/login", data)
+            .then((response) => {
+                alert("Login Successful")
+                console.log(response)
+                navigate("/home")
+            })
+            .catch((error) => {
+                if (error.response && error.response.status === 401) {
+                    alert("Invalid Email or Password")
+                    navigate("/login")
+                } else {
+                    console.log(error)
+                }
+            })
         console.log(data)
-        reset()
     }
 
     return (
@@ -46,17 +64,18 @@ function LoginPage() {
                             </label>
                         </div>
                         <input
+                            name="email"
+                            autoComplete="off"
                             id="email"
                             className="w-full p-1 rounded-md mb-7 outline-none  border border-black"
                             type="email"
-                            {...register("Email", { required: true })}
+                            {...register("email", { required: true })}
                         />
-                        {errors.Email && (
+                        {errors.email && (
                             <p className="italic text-red-600 -mt-6 font-normal font-fira text-[14px] ">
                                 Email is required.
                             </p>
                         )}
-
                         <div className="login">
                             <LockIcon />
                             <label htmlFor="password" className="login_text">
@@ -64,7 +83,8 @@ function LoginPage() {
                             </label>
                         </div>
                         <input
-                            id="password"
+                            name="password"
+                            id="Password"
                             className="w-full p-1 rounded-md mb-5 outline-none border border-black"
                             type="password"
                             {...register("Password", { required: true })}
@@ -76,11 +96,14 @@ function LoginPage() {
                         )}
 
                         <div className="flex justify-end mb-3">
-                            <button type="submit" className="login_btn">
+                            <button
+                                onClick={() => dispatch(login())}
+                                type="submit"
+                                className="login_btn"
+                            >
                                 Resume
                             </button>
                         </div>
-
                         <div className="flex space-x-3 items-center font-semibold text-black mb-4">
                             <h3>Not a Member?</h3>
 
@@ -88,9 +111,8 @@ function LoginPage() {
                                 <a href="./signUp"> Create an Account</a>
                             </h4>
                         </div>
-
                         <div
-                            onClick={() => navigation("/")}
+                            onClick={() => navigate("/")}
                             className="flex flex-row space-x-2 items-center bg-black py-2 rounded-md text-[15px] w-44 px-1 cursor-pointer"
                         >
                             <ArrowBackIcon className="text-white font-bold" />

@@ -1,10 +1,12 @@
-import React from "react"
 import { Header } from "../../components/Header"
 import { Footer } from "../../components/Footer"
 import { FaHandPointRight } from "react-icons/fa"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
-
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { logout } from "../../features/AuthSlice"
 function LayOut() {
+    const dispatch = useDispatch()
     const today = new Date()
     const options = {
         weekday: "long",
@@ -12,13 +14,23 @@ function LayOut() {
         month: "long",
         year: "numeric",
     }
+    const logOut = () => {
+        dispatch(logout())
+        navigate("/")
+    }
+    const navigate = useNavigate()
+    const batchPage = () => {
+        navigate("/batch")
+    }
     const formattedDate = today.toLocaleDateString(undefined, options)
 
     return (
         <div className="bg-[#fff] h-full flex flex-col md:flex-row space-y-28 md:space-y-6">
             <div className="w-full px-3 md:w-[25%] lg:w-[20%] md:px-7 h-[600px] md:h-[800px] md:border-2 md:shadow-lg border-solid border-y-0 border-l-0">
                 <div className="mb-10 space-y-2">
-                    <h1 className="text-[23px] font-semibold mt-5 ">Actions</h1>
+                    <h1 className="text-[23px] font-normal font-Belanosima mt-5 ">
+                        Hello
+                    </h1>
                 </div>
 
                 <div className="space-y-4">
@@ -28,7 +40,8 @@ function LayOut() {
                         Icon={FaHandPointRight}
                     />
                     <SideBar
-                        title={"Course Correction"}
+                        onClick={batchPage}
+                        title={"Batch Registration"}
                         Icon={FaHandPointRight}
                     />
                     <SideBar title={"PPA Letter"} Icon={FaHandPointRight} />
@@ -37,7 +50,11 @@ function LayOut() {
                         title={"Disciplinary Case"}
                         Icon={FaHandPointRight}
                     />
-                    <SideBar title={"Log Out"} Icon={FaHandPointRight} />
+                    <SideBar
+                        onClick={logOut}
+                        title={"Log Out"}
+                        Icon={FaHandPointRight}
+                    />
                 </div>
             </div>
 
@@ -58,37 +75,20 @@ function LayOut() {
                     <div className="bg-[#dff0d8] px-5 mx-5 mt-4 rounded-md">
                         <div className="flex flex-row justify-between">
                             <div className="list-none flex flex-col justify-start py-4 space-y-1 md:space-y-1 md:ml-[40px] lg:ml-[55px]">
-                                <UserDetails
-                                    title={"Name"}
-                                    details={"Adebunmi Temitope "}
-                                />
-                                <UserDetails
-                                    title={"Batch"}
-                                    details={"C 2022"}
-                                />
-                                <UserDetails
-                                    title={"Email"}
-                                    details={"adebunmi33@gmail.com"}
-                                />
+                                <UserDetails title={"Firstname"} details={""} />
+                                <UserDetails title={"Lastname"} details={""} />
+                                <UserDetails title={"Batch"} details={""} />
+                                <UserDetails title={"Email"} details={""} />
                                 <UserDetails
                                     title={"Phone Number"}
-                                    details={"07059195123"}
+                                    details={""}
                                 />
-                                <UserDetails
-                                    title={"Name"}
-                                    details={"Adebunmi Temitope "}
-                                />
-                                <UserDetails
-                                    title={"Batch"}
-                                    details={"C 2022"}
-                                />
-                                <UserDetails
-                                    title={"Email"}
-                                    details={"adebunmi33@gmail.com"}
-                                />
+                                <UserDetails title={"Gender"} details={""} />
+                                <UserDetails title={"Batch"} details={""} />
+                                <UserDetails title={"Email"} details={""} />
                                 <UserDetails
                                     title={"Phone Number"}
-                                    details={"07059195123"}
+                                    details={""}
                                 />
                             </div>
                             <div className="hidden md:inline-flex sm:inline-flex sm:mt-3">
@@ -138,9 +138,17 @@ function UserDetails({ title, details }) {
     )
 }
 
-function SideBar({ title, Icon }) {
+function SideBar({ title, Icon, onClick }) {
+    const handleClick = () => {
+        if (onClick) {
+            onClick()
+        }
+    }
     return (
-        <div className="flex items-center gap-3 last:border-b-0 border border-solid border-x-0 border-t-0 border-[#808080] p-2 py-4 ">
+        <div
+            onClick={handleClick}
+            className="flex items-center gap-3 last:border-b-0 border border-solid border-x-0 border-t-0 border-[#808080] p-2 py-4 "
+        >
             {Icon && <Icon className="w-4  h-4 " />}
             <h3 className="text-[18px] md:text-[15px] flex-1 font-semibold cursor-pointer hover:text-red-500">
                 {title}
