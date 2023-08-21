@@ -3,7 +3,7 @@ import React from "react"
 //   footer section
 export function Footer() {
     return (
-        <footer className="sticky bottom-0 z-30 hidden lg:inline md:inline ">
+        <footer className="sticky bottom-0 z-30 hidden md:block">
             <div className="bg-[#003500] h-28 md:h-16 lg:h-14 w-full border text-center border-[#960000] border-x-0 border-b-0 border-t-[4px]">
                 <div className="text-white mt-5 flex flex-col md:justify-evenly md:flex-row items-center gap-y-5 text-[15px]">
                     <h4>

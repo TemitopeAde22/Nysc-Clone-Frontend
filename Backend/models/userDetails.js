@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
+const crypto = require("crypto")
 // Declare the Schema of the Mongo model
 var userSchema = new mongoose.Schema(
     {
@@ -23,15 +24,90 @@ var userSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
+        gender: {
+            type: String,
+            required: true,
+        },
+        school: {
+            type: String,
+            required: true,
+            description: "The name of the school",
+        },
+        OrientationCamp: {
+            type: String,
+            required: true,
+        },
+        statePostedTo: {
+            type: String,
+            required: true,
+        },
+        address: {
+            type: String,
+            required: true,
+            description: "The address of the person",
+        },
+        course: {
+            type: String,
+            required: true,
+            description: "The course the person is taking",
+        },
+        stateOfOrigin: {
+            type: String,
+            required: true,
+            description: "The marital status of the person",
+        },
+        matric: {
+            type: String,
+            required: true,
+            unique: true,
+            description: "The matriculation number",
+        },
+        qualification: {
+            type: String,
+            required: true,
+            description: "The qualification of the person",
+        },
+        from: {
+            type: String,
+            required: true,
+            format: Date,
+            description: "The start date",
+        },
+        status: {
+            type: String,
+            required: true,
+            description: "The marital status of the person",
+        },
+        to: {
+            type: String,
+            required: true,
+            format: Date,
+            description: "The end date",
+        },
+        CallUpNumber: {
+            type: String,
+            required: true,
+            description: "Call up Number",
+            unique: true,
+        },
+        Batch: {
+            type: String,
+            required: true,
+        },
         role: {
             type: String,
             default: "User",
         },
-
+        refreshToken: {
+            type: String,
+        },
         Password: {
             type: String,
             required: true,
         },
+        PasswordResetToken: String,
+        PasswordResetExpires: Date,
+        PasswordChangedAt: Date,
     },
     {
         timestamps: true,
@@ -46,6 +122,15 @@ userSchema.pre("save", async function (next) {
 
 userSchema.methods.isPasswordMatched = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.Password)
+}
+userSchema.methods.createPasswordResetToken = async function () {
+    const resettoken = crypto.randomBytes(32).toString("hex")
+    this.PasswordResetToken = crypto
+        .createHash("sha256")
+        .update(resettoken)
+        .digest("hex")
+    this.PasswordResetExpires = Date.now() + 30 * 60 * 1000 // 10 minutes
+    return resettoken
 }
 
 //Export the model

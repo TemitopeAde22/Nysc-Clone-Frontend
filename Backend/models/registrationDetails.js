@@ -10,7 +10,7 @@ var userRegistration = new mongoose.Schema(
             index: true,
             description: "name of the person",
         },
-        title: {
+        gender: {
             type: String,
             required: true,
         },
@@ -18,6 +18,14 @@ var userRegistration = new mongoose.Schema(
             type: String,
             required: true,
             description: "The name of the school",
+        },
+        OrientationCamp: {
+            type: String,
+            required: true,
+        },
+        statePostedTo: {
+            type: String,
+            required: true,
         },
         country: {
             type: String,
@@ -34,7 +42,7 @@ var userRegistration = new mongoose.Schema(
             required: true,
             description: "The course the person is taking",
         },
-        state: {
+        stateOfOrigin: {
             type: String,
             required: true,
             description: "The marital status of the person",
@@ -66,6 +74,12 @@ var userRegistration = new mongoose.Schema(
             required: true,
             format: Date,
             description: "The end date",
+        },
+        CallUpNumber: {
+            type: String,
+            required: true,
+            description: "Call up Number",
+            unique: true,
         },
     },
     {

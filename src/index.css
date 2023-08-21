@@ -91,13 +91,13 @@
     md:font-semibold hover:scale-105 transform transition duration-200 ease-out;
     }
     .signup {
-        @apply lg:flex flex-row sm:flex md:flex;
+        @apply lg:flex flex-row sm:flex md:flex mt-2;
     }
     .input_container {
         @apply w-full px-2 py-1 text-sm rounded flex flex-col space-y-1;
     }
     .input_form {
-        @apply border border-solid border-gray-300 outline-none p-2 rounded-md;
+        @apply border border-solid border-gray-300 outline-none p-2 rounded-md invalid:border-red-600 invalid:border-2 ;
     }
 
     .layout {
@@ -114,11 +114,11 @@
     }
 
     .login {
-        @apply flex flex-row space-x-2 items-center mb-3;
+        @apply flex flex-row space-x-2 items-center mb-1;
     }
 
     .login_text {
-        @apply text-[18px] font-normal text-black tracking-[1px] font-Roboto;
+        @apply text-[16px] font-normal text-black tracking-[1px] font-Belanosima;
     }
 
     .sidebar_options {
@@ -139,12 +139,16 @@
 
     .label_text {
         @apply w-full border border-black py-2 border-x-0 border-t-0 mb-5
-        font-Belanosima text-[17px]
+        font-Belanosima text-[17px];
     }
     .input {
-        @apply outline-none border w-full mt-2 py-1 px-4 rounded-full
+        @apply outline-none border w-full mt-2 py-2 px-4 rounded-md  font-normal;
     }
     .text {
-        @apply font-Roboto text-[15px]
+        @apply font-Roboto font-semibold text-[15px];
+    }
+    .sidebar {
+        @apply w-full px-3 md:w-[25%] lg:w-[20%] md:px-7 h-[600px] md:h-[800px] 
+        md:border-2 md:shadow-lg border-solid border-y-0 border-l-0;
     }
 }

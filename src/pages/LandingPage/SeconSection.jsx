@@ -1,12 +1,25 @@
 import React from "react"
 import { Link } from "react-router-dom"
-
+import { motion } from "framer-motion"
 // second section
 // verify certificate, payment status Etc...
 export function SecondSection() {
     return (
         <div>
-            <div className="grid grid-cols-1 sm:gap-x-10 md:grid-cols-3 gap-x-10 gap-5 ">
+            <motion.div
+                variants={{
+                    hidden: { opacity: 0, y: 150 },
+                    visible: { opacity: 1, y: 0 },
+                }}
+                initial="hidden"
+                animate={"visible"}
+                transition={{
+                    duration: 0.5,
+                    delay: 0.25,
+                    ease: "easeIn",
+                }}
+                className="grid grid-cols-1 sm:gap-x-10 md:grid-cols-3 gap-x-10 gap-5 "
+            >
                 <DataOne
                     imageSrc="https://portal.nysc.org.ng/nysc1/img/service-icon/verification.png"
                     title="Verify Certificates"
@@ -27,7 +40,7 @@ export function SecondSection() {
                     linkText="Visit the Nysc Website for More Information"
                     linkURL="/home"
                 />
-            </div>
+            </motion.div>
         </div>
     )
 }

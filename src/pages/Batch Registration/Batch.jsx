@@ -1,9 +1,9 @@
-import React from "react"
-
+// import Loader from "../../components/Loader"
 import Registration from "./Registration"
 import Instruction from "./Instruction"
 import { Header } from "../../components/Header"
 import { Footer } from "../../components/Footer"
+
 function Batch() {
     return (
         <div>
@@ -14,6 +14,7 @@ function Batch() {
                     <Registration />
                 </div>
             </div>
+
             <Footer />
         </div>
     )

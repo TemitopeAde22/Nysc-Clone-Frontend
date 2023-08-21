@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useTypewriter } from "react-simple-typewriter"
+// import { useTypewriter } from "react-simple-typewriter"
 import {
     ArrowDropDown as ArrowDropDownIcon,
     ArrowDropUp as ArrowDropUpIcon,
@@ -23,17 +23,17 @@ export function Header() {
     const handleDropDown = () => {
         setIsOpen(!isOpen)
     }
-    const [text] = useTypewriter({
-        words: [
-            "Welcome to the NYSC Portal",
-            "Registration in Progress...",
-            // 'Read Below For Registration Process'
-        ],
-        loop: 1,
-        delaySpeed: 2000,
-    })
+    // const [text] = useTypewriter({
+    //     words: [
+    //         "Welcome to the NYSC Portal",
+    //         "Registration in Progress...",
+    //         // 'Read Below For Registration Process'
+    //     ],
+    //     loop: 1,
+    //     delaySpeed: 2000,
+    // })
     return (
-        <header className="w-full bg-[#fff] sticky  z-20 top-0">
+        <header className="w-full bg-[#fff] z-20">
             {/* Header Top */}
             <div className=" relative md:ml-20 flex sm:h-[70px] sm:flex-row sm:items-center items-start md:items-center space-x-5 flex-col md:flex-row px-5">
                 <div className="flex items-center flex-row justify-between space-x-10 ">
@@ -158,7 +158,8 @@ export function Header() {
                 <div className="border border-x-0 border-t-0 border-[#960000] border-b-[4px]"></div>
                 <div className="bg-[#2b943a] p-[10px] w-full">
                     <h1 className="text-white md:ml-20 font-semibold sm:text-3xl text-2xl md:text-3xl font-sans tracking-wide">
-                        {text} <span className="text-3xl font-sans"></span>
+                        Welcome to the NYSC Portal{" "}
+                        <span className="text-3xl font-sans"></span>
                     </h1>
                 </div>
                 <div className="border border-x-0 border-t-0 border-[#cdc9e0] border-b-[4px]"></div>

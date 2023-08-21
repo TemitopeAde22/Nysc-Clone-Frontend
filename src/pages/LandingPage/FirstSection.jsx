@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
+import { motion } from "framer-motion"
+
 // Remobilization and Login section
 export function FirstSection() {
     const [hover, setHover] = useState(false)
@@ -55,9 +57,22 @@ export function FirstSection() {
 
             <div className=" border border-[#d3d3d3] xl:p-6 shadow-md mb-8 sm:py-5">
                 <div className="text-center p-3">
-                    <span className="text-2xl font-serif text-[#000080]">
+                    <motion.span
+                        variants={{
+                            hidden: { opacity: 0, y: 75 },
+                            visible: { opacity: 1, y: 0 },
+                        }}
+                        initial="hidden"
+                        animate={"visible"}
+                        transition={{
+                            duration: 0.5,
+                            delay: 0.25,
+                            ease: "easeIn",
+                        }}
+                        className="text-2xl font-serif text-[#000080]"
+                    >
                         New: Online Application for Remobilization!!
-                    </span>
+                    </motion.span>
                     <Link to={"/apply"}>
                         <h3 className="text-gray-400 text-lg cursor-pointer hover:underline">
                             Click here to Apply for Remobilisation

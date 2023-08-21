@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { motion } from "framer-motion"
 //guidlines section
 export function Guidlines() {
     return (
@@ -10,7 +11,13 @@ export function Guidlines() {
                 </h1>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-2">
+            <motion.div
+                initial={{ opacity: 0, scale: 0, x: 100 }}
+                whileInView={{ opacity: 1, scale: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-2"
+            >
                 <DataTwo
                     title={"Foreign P.C.M Requirements"}
                     imageSrc={
@@ -40,7 +47,7 @@ export function Guidlines() {
                     imageSrc={"https://portal.nysc.org.ng/nysc1/img/faq.png"}
                     linkUrl={"#faq"}
                 />
-            </div>
+            </motion.div>
         </div>
     )
 }
