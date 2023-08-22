@@ -10,8 +10,6 @@ import { base_url } from "../../utils/axiosConfig"
 import Sidebar from "./Sidebar"
 import Modal from "../../components/Modal"
 
-// import Loader from "../../components/Loader"
-
 function LayOut() {
     const [modalOpen, setModalOpen] = useState(false)
     const dispatch = useDispatch()
@@ -122,7 +120,7 @@ function LayOut() {
                                             />
                                             <UserDetails
                                                 title={"State Code"}
-                                                details={user.code || "NA"}
+                                                details={user.StateCode || "NA"}
                                             />
                                         </div>
                                         <div className="hidden md:inline-flex sm:inline-flex sm:mt-3">

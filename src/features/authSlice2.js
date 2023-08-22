@@ -7,7 +7,7 @@ export const registerUser = createAsyncThunk(
     async (userData, thunkAPI) => {
         try {
             const response = await axios.post(
-                "https://nysc-backend-clone.onrender.com/api/user/register",
+                "http://localhost:5000/api/user/register",
                 userData
             )
             // If the registration is successful, return the response data
