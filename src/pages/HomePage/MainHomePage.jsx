@@ -69,7 +69,7 @@ function LayOut() {
 
                         <div className="w-full h-screen md:mt-10 md:w-[70%] lg:w-[90%]">
                             <div className="flex flex-col justify-between md:flex-row mb-10 md:items-center space-y-3">
-                                <h2 className="bg-green-600 rounded-[4px] text-[15px] px-7 ml-5 text-white font-semibold text-center w-60">
+                                <h2 className="bg-green-600 rounded-[4px] text-[15px] px-7 ml-5 text-white font-semibold text-center">
                                     {user.email}
                                 </h2>
                                 <h3 className="md:mr-10 ml-[170px] text-[14px] text-gray-800">
