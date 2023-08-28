@@ -16,7 +16,7 @@ const InputField = ({
         </h3>
         <input
             placeholder={placeholder}
-            className={`input_form font-normal ${
+            className={`input_form font-normal placeholder:text-[12px] placeholder:italic ${
                 name === "Password" || name === "confirmPassword" ? "mb-1" : ""
             }`}
             type={type}

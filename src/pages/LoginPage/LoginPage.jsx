@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import MailIcon from "@mui/icons-material/Mail"
 import LockIcon from "@mui/icons-material/Lock"
 import { useNavigate, Link } from "react-router-dom"
@@ -10,11 +10,13 @@ import { base_url } from "../../utils/axiosConfig"
 import { toast } from "react-toastify"
 import Loader from "../../components/Loader"
 import ToastMsg from "../../components/ToastContainer"
+import { MdOutlineRemoveRedEye } from "react-icons/md"
+import { AiOutlineEyeInvisible } from "react-icons/ai"
 // import Loader from "../../components/Loader"
 
 function LoginPage() {
     const dispatch = useDispatch()
-
+    const [showPassword, setShowPassword] = useState(false)
     //react-hook form
     const {
         register,
@@ -81,48 +83,76 @@ function LoginPage() {
                             enjoy the experience.
                         </h2>
                         <form className="" onSubmit={handleSubmit(onSubmit)}>
-                            <div className="login">
-                                <MailIcon />
-                                <label htmlFor="email" className="login_text">
-                                    Email Address
-                                </label>
-                            </div>
-                            <input
-                                name="email"
-                                autoComplete="off"
-                                id="email"
-                                className="w-full py-2 px-3 rounded-md mb-7  outline-none  border border-gray-300"
-                                type="email"
-                                {...register("email", { required: true })}
-                            />
-                            {errors.email && (
-                                <p className="italic text-red-600 -mt-6 font-normal font-fira text-[14px] ">
-                                    Email is required.
-                                </p>
-                            )}
-                            <div className="login">
-                                <LockIcon />
-                                <label
-                                    htmlFor="password"
-                                    className="login_text"
-                                >
-                                    Password
-                                </label>
-                            </div>
-                            <input
-                                name="password"
-                                id="Password"
-                                className="w-full py-2 px-3 rounded-md mb-7  outline-none  border border-gray-300"
-                                type="password"
-                                {...register("Password", { required: true })}
-                            />
-                            {errors.Password && (
-                                <p className="italic text-red-600 font-normal font-fira text-[14px] -mt-4">
-                                    Password is required.
-                                </p>
-                            )}
+                            <div className="flex flex-col gap-y-3">
+                                <div className="login">
+                                    <MailIcon />
+                                    <label
+                                        htmlFor="email"
+                                        className="login_text"
+                                    >
+                                        Email Address
+                                    </label>
+                                </div>
+                                <input
+                                    name="email"
+                                    autoComplete="off"
+                                    id="email"
+                                    className="w-full py-2 px-3 rounded-md outline-none  border border-gray-300"
+                                    type="email"
+                                    placeholder="@.com"
+                                    {...register("email", { required: true })}
+                                />
+                                {errors.email && (
+                                    <p className="italic text-red-600 mt-[2px] font-normal text-[10px] ">
+                                        Email is required.
+                                    </p>
+                                )}
+                                <div className="login">
+                                    <LockIcon />
+                                    <label
+                                        htmlFor="password"
+                                        className="login_text"
+                                    >
+                                        Password
+                                    </label>
+                                </div>
+                                <div className="flex items-center justify-between w-full rounded-md outline-none px-2  border border-gray-300">
+                                    <input
+                                        name="password"
+                                        id="Password"
+                                        className="w-full py-2 px-3 rounded-md outline-none"
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
+                                        {...register("Password", {
+                                            required: true,
+                                        })}
+                                    />
+                                    {showPassword ? (
+                                        <MdOutlineRemoveRedEye
+                                            onClick={() =>
+                                                setShowPassword((prev) => !prev)
+                                            }
+                                            className="h-5 w-7"
+                                        />
+                                    ) : (
+                                        <AiOutlineEyeInvisible
+                                            onClick={() =>
+                                                setShowPassword((prev) => !prev)
+                                            }
+                                            className="h-5 w-7"
+                                        />
+                                    )}
+                                </div>
 
-                            <div className="flex justify-end mb-3">
+                                {errors.Password && (
+                                    <p className="italic text-red-600 font-normal text-[10px] ">
+                                        Password is required.
+                                    </p>
+                                )}
+                            </div>
+
+                            <div className="flex justify-end mb-3 mt-5">
                                 <button
                                     // onClick={() => dispatch(login())}
                                     type="submit"

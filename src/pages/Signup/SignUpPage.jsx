@@ -1,4 +1,3 @@
-import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
@@ -6,58 +5,46 @@ import { registerUser } from "../../features/authSlice2"
 import Loader from "../../components/Loader"
 import { toast } from "react-toastify"
 import ToastMsg from "../../components/ToastContainer"
-import { HiOutlineArrowNarrowRight } from "react-icons/hi"
 import InputField from "../../components/CustomInput"
 import states from "../../constants/states.json"
 import universities from "../../constants/universities.json"
+import { useState } from "react"
+import { MdOutlineRemoveRedEye } from "react-icons/md"
+import { AiOutlineEyeInvisible } from "react-icons/ai"
 
 function SignUpPage() {
     //validation patterns
     const USER_REGEX = /^[A-Za-z]/
     const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
     const MOBILE_REGEX = /^[0-9]*$/
-
     //react-hook form
     const {
         register,
+        formState,
         handleSubmit,
-        formState: { errors, isValid },
+        formState: { errors },
         watch,
     } = useForm()
 
-    //button conditions
-    const renderButton = () => {
-        if (formStep > 2) {
-            return undefined
-        } else if (formStep === 2) {
-            return (
-                <button
-                    type="submit"
-                    disabled={!isValid}
-                    className="px-6 py-2 mt-5 ml-3 text-base font-bold rounded bg-[#2b943a] 
-                    text-white uppercase cursor-pointer 
-                   border-solid "
-                >
-                    Submit
-                </button>
-            )
-        } else {
-            return (
-                <button
-                    type="button"
-                    onClick={completeForm}
-                    disabled={!isValid}
-                    className="px-6 py-2 mt-5 ml-3 text-base font-bold rounded bg-[#2b943a] 
-                    text-white uppercase  cursor-pointer 
-                    border-solid "
-                >
-                    Next
-                </button>
-            )
+    const [step, setStep] = useState(0)
+    const { isValid } = formState
+
+    const handleNextStep = () => {
+        // Move to the next step
+        if (step < 2) {
+            setStep(step + 1)
         }
     }
 
-    const [formStep, setFormStep] = useState(0)
+    const handlePrevStep = () => {
+        // Move to the previous step
+        if (step > 0) {
+            setStep(step - 1)
+        }
+    }
+
+    //button conditions
+
     const isLoading = useSelector((state) => state.auth.isLoading)
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -68,13 +55,9 @@ function SignUpPage() {
         confirmPassword: watch("confirmPassword"),
     }
     const { Password } = key
-    const completeForm = () => {
-        setFormStep((current) => current + 1)
-    }
 
     //sign up api
     const onSubmit = async (data, e) => {
-        completeForm()
         e.preventDefault()
         const action = await dispatch(registerUser(data))
 
@@ -103,14 +86,10 @@ function SignUpPage() {
 
     return (
         <div
-            style={{ backgroundImage: 'url("../images/imagethree.jpg")' }}
-            className="bg-cover bg-center bg-no-repeat bg-opacity-60"
+            // style={{ backgroundImage: 'url("../images/imagethree.jpg")' }}
+            className="bg-[#f5f5f5]"
         >
-            <div
-                className={`max-w-6xl p-5 mx-auto flex justify-center items-center md:h-screen  ${
-                    isLoading ? "backdrop-blur-md" : ""
-                }`}
-            >
+            <div className="max-w-6xl p-5 mx-auto flex justify-center items-center h-screen">
                 {isLoading ? (
                     <Loader />
                 ) : (
@@ -133,13 +112,8 @@ function SignUpPage() {
                                 onSubmit={handleSubmit(onSubmit)}
                                 className="text-sm text-gray-700 font-bold"
                             >
-                                {formStep >= 0 && (
-                                    //first section of sign up
-                                    <section
-                                        className={
-                                            formStep === 0 ? "block" : "hidden"
-                                        }
-                                    >
+                                {step === 0 && (
+                                    <section>
                                         {/* firstname and lastname */}
 
                                         <div className="signup mt-0">
@@ -149,6 +123,9 @@ function SignUpPage() {
                                                 errors={errors}
                                                 name="firstname"
                                                 type="text"
+                                                placeholder={
+                                                    "Must contain letters only"
+                                                }
                                                 validation={{
                                                     required:
                                                         "First name is required",
@@ -159,12 +136,17 @@ function SignUpPage() {
                                                     },
                                                 }}
                                             />
+
                                             <InputField
                                                 label="Last Name"
                                                 register={register}
                                                 errors={errors}
                                                 name="lastname"
                                                 type="text"
+                                                placeholder={
+                                                    "Must contain letters only"
+                                                }
+                                                val
                                                 validation={{
                                                     required:
                                                         "Last name is required",
@@ -185,6 +167,8 @@ function SignUpPage() {
                                                 errors={errors}
                                                 name="email"
                                                 type="email"
+                                                placeholder={"@.com"}
+                                                val
                                                 validation={{
                                                     required: true,
                                                 }}
@@ -264,13 +248,9 @@ function SignUpPage() {
                                         />
                                     </section>
                                 )}
-                                {formStep >= 1 && (
-                                    //second section of sign up
-                                    <section
-                                        className={
-                                            formStep === 1 ? "block" : "hidden"
-                                        }
-                                    >
+
+                                {step === 1 && (
+                                    <section>
                                         {/* school, dates, qualification, matric number and course fields */}
                                         <div className="">
                                             <SelectInput
@@ -341,13 +321,8 @@ function SignUpPage() {
                                         />
                                     </section>
                                 )}
-                                {formStep >= 2 && (
-                                    //third section of sign up
-                                    <section
-                                        className={
-                                            formStep === 2 ? "block" : "hidden"
-                                        }
-                                    >
+                                {step === 2 && (
+                                    <section>
                                         {/* Batch, and password fields */}
                                         <SelectInput
                                             label="Batch"
@@ -366,12 +341,14 @@ function SignUpPage() {
                                             errors={errors}
                                         />
                                         <div className="flex flex-col gap-y-3 mt-2">
-                                            <InputField
+                                            <InputField2
                                                 label="Password"
                                                 register={register}
                                                 errors={errors}
                                                 name="Password"
-                                                type="password"
+                                                placeholder={
+                                                    "8-24 characters long, contain lowercase letter, uppercase letter, digit & [!@#$%]"
+                                                }
                                                 validation={{
                                                     required:
                                                         "Password is required",
@@ -382,7 +359,8 @@ function SignUpPage() {
                                                     },
                                                 }}
                                             />
-                                            <InputField
+
+                                            <InputField2
                                                 label="Confirm Password"
                                                 register={register}
                                                 errors={errors}
@@ -401,17 +379,44 @@ function SignUpPage() {
                                 )}
 
                                 <div className="w-full flex justify-between items-center">
-                                    {renderButton()}
+                                    {step > 0 && (
+                                        <button
+                                            type="button"
+                                            onClick={handlePrevStep}
+                                            className="button"
+                                        >
+                                            Previous
+                                        </button>
+                                    )}
 
-                                    <div className="flex flex-col items-center justify-center mt-3">
-                                        <Link to={"/login"}>
-                                            <span className="hover:underline cursor-pointer text-[15px] font-Roboto font-normal">
-                                                Sign-in
-                                            </span>
-                                        </Link>
-
-                                        <HiOutlineArrowNarrowRight className="h-5 w-5" />
-                                    </div>
+                                    {step === 2 ? (
+                                        <button
+                                            type="submit"
+                                            disabled={!isValid}
+                                            className="button"
+                                        >
+                                            Submit
+                                        </button>
+                                    ) : (
+                                        <button
+                                            type="button"
+                                            onClick={handleNextStep}
+                                            disabled={!isValid}
+                                            className="button"
+                                        >
+                                            Next
+                                        </button>
+                                    )}
+                                </div>
+                                <div className="flex items-center justify-end mt-3">
+                                    <Link to={"/login"}>
+                                        <h2 className="font-normal">
+                                            Already have an account ?
+                                        </h2>
+                                        <span className="hover:underline cursor-pointer text-blue-400 text-[15px] font-Roboto font-normal">
+                                            Sign-in
+                                        </span>
+                                    </Link>
                                 </div>
                             </form>
                             <ToastMsg />
@@ -459,7 +464,7 @@ const SelectInput = ({ label, name, register, options, errors }) => (
 )
 
 // text input passing props
-const TextInput = ({ label, name, register, errors, type }) => (
+const TextInput = ({ label, name, register, errors, type, validation }) => (
     <div className="p-2">
         <label
             className="font-Belanosima font-normal text-[16px]"
@@ -471,7 +476,7 @@ const TextInput = ({ label, name, register, errors, type }) => (
         <input
             className="input"
             type={type}
-            {...register(name, { required: true })}
+            {...register(name, { ...validation, required: true })}
         />
         {errors[name] && (
             <p className="italic text-[10px] font-semibold text-red-500 mt-1">
@@ -480,5 +485,59 @@ const TextInput = ({ label, name, register, errors, type }) => (
         )}
     </div>
 )
+
+function InputField2({
+    label,
+    register,
+    errors,
+    name,
+    validation,
+    errorMessage,
+    placeholder,
+}) {
+    const [showPassword, setShowPassword] = useState(false)
+    return (
+        <div className="input_container">
+            <h3 className="font-Belanosima font-normal text-[16px]">
+                {label} <span className="text-red-700 self-center">*</span>
+            </h3>
+            <div className="flex items-center border rounded-md px-2">
+                <input
+                    placeholder={placeholder}
+                    className={`input_form !border-none w-full font-normal placeholder:text-[12px] placeholder:italic ${
+                        name === "Password" || name === "confirmPassword"
+                            ? "mb-1"
+                            : ""
+                    }`}
+                    type={showPassword ? "text" : "password"}
+                    {...register(name, validation)}
+                />
+                {showPassword ? (
+                    <MdOutlineRemoveRedEye
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="h-5 w-7"
+                    />
+                ) : (
+                    <AiOutlineEyeInvisible
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="h-5 w-7"
+                    />
+                )}
+            </div>
+
+            {errors[name] && (
+                <p
+                    className={`italic text-[10px] font-semibold text-red-500 ${
+                        name === "Password" || name === "confirmPassword"
+                            ? "-mt-3"
+                            : ""
+                    }`}
+                >
+                    {errors[name].message || errorMessage}
+                </p>
+            )}
+        </div>
+    )
+}
 
 export default SignUpPage

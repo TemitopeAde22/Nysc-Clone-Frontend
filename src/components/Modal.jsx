@@ -36,6 +36,7 @@ function Modal({ setOpenModal }) {
                 dispatch(setUserLoading(false))
             })
     }, [dispatch])
+
     const {
         register,
         handleSubmit,

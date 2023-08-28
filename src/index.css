@@ -49,6 +49,9 @@
     .nav:hover::after {
         @apply w-[62px];
     }
+    .nav.active::after {
+        @apply w-[100%] -left-[0px];
+    }
     .btn {
         @apply bg-[#2b943a] px-1 py-2 w-full text-white border border-solid rounded-sm font-bold
     hover:bg-green-700 hover:transform lg:w-32;
@@ -97,7 +100,7 @@
         @apply w-full px-2 py-1 text-sm rounded flex flex-col space-y-1;
     }
     .input_form {
-        @apply border border-solid border-gray-300 outline-none p-2 rounded-md invalid:border-red-600 invalid:border-2 ;
+        @apply border border-solid border-gray-300 outline-none p-2 rounded-md invalid:border-red-600 invalid:border-2;
     }
 
     .layout {
@@ -150,5 +153,8 @@
     .sidebar {
         @apply w-full px-3 md:w-[25%] lg:w-[20%] md:px-7 h-[600px] md:h-[800px] 
         md:border-2 md:shadow-lg border-solid border-y-0 border-l-0;
+    }
+    .button {
+        @apply px-6 py-1 mt-5 ml-3 text-base font-bold rounded bg-[#2b943a] text-white uppercase cursor-pointer border-solid;
     }
 }

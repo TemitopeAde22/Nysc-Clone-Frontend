@@ -13,7 +13,7 @@ import {
     Call as CallIcon,
 } from "@mui/icons-material"
 import { BiMenuAltRight } from "react-icons/bi"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 export function Header() {
     const [isOpen, setIsOpen] = useState(false)
@@ -90,21 +90,9 @@ export function Header() {
 
                 <div className="border-none hidden md:flex md:flex-row flex-col items-center sm:inline-flex">
                     <ul className="flex w-94 md:w-64 md:flex-row sm:justify-evenly sm:flex-row sm:p-5 md:py-5 flex-col items-center justify-start">
-                        <li className="list_items relative nav">
-                            <a className="links" href="https://Home#">
-                                Home
-                            </a>
-                        </li>
-                        <li className="list_items relative nav">
-                            <a className="links" href="https://Contact#">
-                                Contact
-                            </a>
-                        </li>
-                        <li className="list_items relative nav border-b-0">
-                            <a className="links" href="https://Payment#">
-                                Payment
-                            </a>
-                        </li>
+                        <NavLink to="/">Home</NavLink>
+                        <NavLink to="/Contact">Contact</NavLink>
+                        <NavLink to="/Payment">Payment</NavLink>
                     </ul>
                 </div>
 
@@ -193,5 +181,21 @@ function SideBar({ title, Icon, linkUrl }) {
 
             {Icon && <Icon sx={{ width: 25, height: 25 }} />}
         </div>
+    )
+}
+
+function NavLink({ to, children }) {
+    const location = useLocation()
+
+    return (
+        <li
+            className={`list_items relative nav ${
+                location.pathname === to ? "active" : ""
+            }`}
+        >
+            <Link className="links" to={to}>
+                {children}
+            </Link>
+        </li>
     )
 }
